@@ -1,0 +1,54 @@
+<!doctype html>
+<head>
+  <title>Openmesh</title>
+</head>
+
+<style type="text/css">
+  body {
+    margin: 0;
+  }
+
+  #navbar {
+    text-align: left;
+  }
+
+  #navbar button {
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 40px;
+    margin: 20px;
+  }
+
+  #navbar h2 {
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 40px;
+    margin: 20px;
+  }
+
+  #navbar a {
+    text-decoration: none;
+    color: black;
+  }
+
+</style>
+
+<body>
+  <div id="navbar">
+    <h2><a href="./">Openmesh</a></h2>
+    <button><a href="./upload">Upload</a></button>
+    <button><a href="./explore">Explore</a></button>
+  </div>
+
+ <ul>
+  {% for file in files %}
+      <li><a href="{{ url_for('display', filename=file) }}">{{ file }}</a></li>
+  {% endfor %}
+  </ul>
+</body>
+
+</html>
