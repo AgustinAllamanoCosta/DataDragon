@@ -5,6 +5,7 @@ COPY ./src/__init__.py .
 COPY ./src/main.py .
 COPY ./src/requirements.txt .
 COPY ./src/zkp/api ./zkp/api
+COPY ./src/endpoint ./endpoint
 
 RUN pip3 install -r ./requirements.txt
 
