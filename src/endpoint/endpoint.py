@@ -2,7 +2,7 @@ import os
 from flask import Flask, flash, request, redirect, url_for, current_app, send_from_directory, abort, send_file, render_template
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = 'data'
+UPLOAD_FOLDER = 'src/endpoint/data'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
@@ -34,13 +34,13 @@ def upload_file():
 
 @app.route('/explore')
 def blockchain_explorer():
-    filenames = [ file for file in os.listdir('data') if allowed_file(file) ]
-    return render_template('explore.html', files=filenames)
+  filenames = [ file for file in os.listdir(UPLOAD_FOLDER) if allowed_file(file) ]
+  return render_template('explore.html', files=filenames)
 
 @app.route('/explore/<path:filename>')
 def display(filename):
     return send_from_directory(
-        os.path.abspath('data'),
+        os.path.abspath(UPLOAD_FOLDER),
         filename,
         as_attachment=True
     )
