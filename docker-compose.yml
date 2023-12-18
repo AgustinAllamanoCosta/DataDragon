@@ -4,4 +4,4 @@ services:
     container_name: node-1
     ports:
         - '80:80'
-    image: 'agustinallamano/data-dragon:latest'
+    image: 'agustinallamano/data-dagron:latest'
