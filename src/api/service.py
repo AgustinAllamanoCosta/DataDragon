@@ -1,7 +1,13 @@
+import uuid
+import datetime
+from typing import List
 from zkp.api.zkp import random_private_input
 from subprocess import call
 
 DEFAULT_CHAIN_LENGTH: int = 3
+NODE_ID: str = str(uuid.uuid4())
+KNOW_NODES: List[str] = []
+
 
 def run_rescue_prover():
 
@@ -45,3 +51,11 @@ def run_helath_check_test():
         print(e)
         return False
 
+def get_node_data():
+    is_healthy = run_helath_check_test()
+    return {
+        "id": NODE_ID,
+        "is_healthy": is_healthy,
+        "date": datetime.datetime.now(),
+        "know_nodes": KNOW_NODES
+    }
