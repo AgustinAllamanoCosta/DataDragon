@@ -5,7 +5,7 @@ import json
 import os
 import sys
 
-from starkware.air.rescue.rescue_constants import PRIME
+from zkp.src.starkware.air.rescue.rescue_constants import PRIME
 from starkware.main.rescue.rescue_end_to_end_test import generate_random_hex_witness_and_output
 
 if __name__ == '__main__':

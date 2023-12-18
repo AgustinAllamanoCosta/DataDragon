@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
-
 import json
 import os
-import sys
-
-from starkware.air.rescue.rescue_constants import PRIME
-from starkware.main.rescue.rescue_end_to_end_test import generate_random_hex_witness_and_output
-
+from zkp.src.starkware.air.rescue.rescue_constants import PRIME
+from zkp.src.starkware.main.rescue.rescue_end_to_end_test import generate_random_hex_witness_and_output
 
 def random_private_input(chain_length:int):
     print('Generates random private and public inputs for the rescue prover.')

@@ -1,0 +1,7 @@
+version: '2.1'
+services:
+  node-1:
+    container_name: node-1
+    ports:
+        - '80:80'
+    image: 'agustinallamano/data-dragon:latest'

@@ -1,0 +1,14 @@
+FROM ubuntu:18.04 as ZKP
+COPY ./src/zkp ./src/zkp
+
+RUN /src/zkp/install_deps.sh
+
+RUN mkdir -p /src/zkp/build/Release
+
+WORKDIR /src/zkp
+RUN ./run_linter.sh
+
+WORKDIR /src/zkp/build/Release
+
+RUN cmake ../.. -DCMAKE_BUILD_TYPE=Release
+RUN make -j4
