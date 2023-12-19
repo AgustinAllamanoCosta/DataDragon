@@ -9,7 +9,7 @@ class Blockchain:
     self.chain.append(block)
 
     return block
-
+  
   def toDictionary(chain):
     chain_to_dictionary = []
     for block in chain:

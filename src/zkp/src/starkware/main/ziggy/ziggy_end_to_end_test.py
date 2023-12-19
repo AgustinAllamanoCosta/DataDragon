@@ -13,7 +13,7 @@ import pytest
 
 from zkp.src.starkware.air.rescue.rescue_constants import PRIME
 from zkp.src.starkware.air.rescue.rescue_hash import rescue_hash
-from starkware.main.test_utils import ModifyProverOutput, compare_prover_and_verifier_annotations
+from zkp.src.starkware.main.test_utils import ModifyProverOutput, compare_prover_and_verifier_annotations
 
 DIR = 'src/starkware/main/ziggy'
 PROVER_EXE = 'ziggy_prover'
