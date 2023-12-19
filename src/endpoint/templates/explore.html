@@ -45,8 +45,8 @@
   </div>
 
  <ul>
-  {% for file in files %}
-      <li><a href="{{ url_for('display', filename=file) }}">{{ file }}</a></li>
+  {% for block in blocks %}
+      <li>{{ block }}</li>
   {% endfor %}
   </ul>
 </body>

@@ -33,23 +33,14 @@ def upload_file():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            file_data = file.read().decode("utf-8")
+            file_data = file.read()
+            file_data = base64.b64encode(file_data)
+            print(base64.b64decode(file_data))
             blockchain.addBlock(file_data)
-            # filename = secure_filename(file.filename)
-            # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     return render_template('upload.html')
 
 @app.route('/explore')
 def blockchain_explorer():
-  # filenames = [ file for file in os.listdir(UPLOAD_FOLDER) if allowed_file(file) ]
-  return jsonify(Blockchain.toDictionary(blockchain.chain))
-  # return render_template('explore.html', files=filenames)
+  return render_template('explore.html', blocks=Blockchain.toDictionary(blockchain.chain))
 
-@app.route('/explore/<path:filename>')
-def display(filename):
-    return send_from_directory(
-        os.path.abspath(UPLOAD_FOLDER),
-        filename,
-        as_attachment=True
-    )
 
