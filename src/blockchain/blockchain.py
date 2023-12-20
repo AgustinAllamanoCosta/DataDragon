@@ -5,8 +5,8 @@ class Blockchain:
   def __init__(self):
     self.chain = [Block.genesis()]
 
-  def addBlock(self, data):
-    block = Block.createBlock(self.chain[len(self.chain) - 1 ], str(data))
+  def addBlock(self, data, dataIndex, filename):
+    block = Block.createBlock(self.chain[len(self.chain) - 1 ], str(data), dataIndex, filename)
     self.chain.append(block)
 
     return block
@@ -15,9 +15,9 @@ class Blockchain:
     chain_to_dictionary = []
     for block in chain:
       if block.data:
-        chain_to_dictionary.append({ "timestamp": block.timestamp, "lastHash": block.lastHash, "hash": block.hash, "data": base64.b64decode(block.data[1:]), "validator": block.validator, "signature": block.signature })
+        chain_to_dictionary.append({ "timestamp": block.timestamp, "lastHash": block.lastHash, "hash": block.hash, "data": base64.b64decode(block.data[1:]),  "dataIndex": block.dataIndex,  "filename": block.filename,  "validation hash": block.validationHash, "validator": block.validator, "signature": block.signature })
       else:
-        chain_to_dictionary.append({ "timestamp": block.timestamp, "lastHash": block.lastHash, "hash": block.hash, "data": block.data, "validator": block.validator, "signature": block.signature })
+        chain_to_dictionary.append({ "timestamp": block.timestamp, "lastHash": block.lastHash, "hash": block.hash, "data": block.data,  "dataIndex": block.dataIndex,  "filename": block.filename,  "validation hash": block.validationHash, "validator": block.validator, "signature": block.signature })
     return chain_to_dictionary
 
   def isValidChain(chain):
