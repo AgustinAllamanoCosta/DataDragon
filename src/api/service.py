@@ -9,7 +9,8 @@ class Service(object):
     def run_rescue_prover(self):
 
         executable = "/src/zkp/build/Release/src/starkware/main/rescue/rescue_prover"
-        cmd = ["--parameter_file",
+        cmd = [
+            "--parameter_file",
             "/src/zkp/examples/rescue/rescue_params.json",
             "--prover_config_file",
             "/src/zkp/examples/rescue/rescue_prover_config.json",
@@ -60,7 +61,39 @@ class Service(object):
         }
 
     def validate(self):
-        pass
+        executable = "/src/zkp/build/Release/src/starkware/main/ziggy/ziggy_verifier"
+        cmd = [
+            "--in_file",
+            "/src/zkp/examples/ziggy/proof.json",
+            "--logtostderr"
+        ]        
+        return call([executable] + cmd)
 
-    def generate_prover(self):
-        pass
+    def generate_prover(
+            self,
+            private_key:str,
+            message:str
+        ):
+        executable = "/src/zkp/examples/ziggy/generate_keys.py"
+        cmd = [
+            f"--private_key=[{0}]".format(private_key),
+            f"--message=[{0}]".format(message)
+        ]        
+        call([executable] + cmd)
+
+        executable = "/src/zkp/build/Release/src/starkware/main/ziggy/ziggy_prover"
+        cmd = [
+            "--parameter_file",
+            "/src/zkp/examples/ziggy/ziggy_params.json",
+            "--prover_config_file",
+            "/src/zkp/examples/ziggy/ziggy_prover_config.json",
+            "--public_input_file",
+            "/src/zkp/examples/ziggy/ziggy_public_input.json",
+            "--private_input_file",
+            "/src/zkp/examples/ziggy/ziggy_private_input.json",
+            "--out_file",
+            "/src/zkp/examples/ziggy/proof.json",
+            "--logtostderr"
+        ]
+        proc = call([executable] + cmd)
+        return proc

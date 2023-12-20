@@ -11,7 +11,7 @@ class Blockchain:
 
     return block
   
-  def toDictionary(chain):
+  def toDictionary(self,chain):
     chain_to_dictionary = []
     for block in chain:
       if block.data:
@@ -20,7 +20,7 @@ class Blockchain:
         chain_to_dictionary.append({ "timestamp": block.timestamp, "lastHash": block.lastHash, "hash": block.hash, "data": block.data,  "dataIndex": block.dataIndex,  "filename": block.filename,  "validation hash": block.validationHash, "validator": block.validator, "signature": block.signature })
     return chain_to_dictionary
 
-  def isValidChain(chain):
+  def isValidChain(self,chain):
     if Blockchain.toDictionary([chain[0]]) != Blockchain.toDictionary([Block.genesis()]):
       return False
 
@@ -43,6 +43,6 @@ class Blockchain:
     print("Replacing the current chain with new chain")
     self.chain = newChain
 
-  def blockHash(block):
+  def blockHash(self,block):
     timestamp, lastHash, data = block.timestamp, block.lastHash, block.data
     return Block.hash(timestamp, lastHash, data)

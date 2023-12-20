@@ -2,7 +2,18 @@ from hashlib import sha256
 from datetime import datetime
 
 class Block:
-  def __init__(self, timestamp, lastHash, hash, data, dataIndex = 0, filename = None, validationHash = None, validator = None, signature = None):
+  def __init__(
+      self,
+      timestamp,
+      lastHash,
+      hash,
+      data,
+      dataIndex = 0,
+      filename = None,
+      validationHash = None,
+      validator = None,
+      signature = None
+    ):
     self.timestamp = timestamp
     self.lastHash = lastHash
     self.hash = hash
@@ -24,15 +35,36 @@ class Block:
         Validation Hash : {}
         Validator : {}
         Signature : {}
-    """.format(self.timestamp, self.lastHash, self.hash, self.data, self.dataIndex, self.filename, self.validationHash, self.validator, self.signature)
+    """.format(
+      self.timestamp,
+      self.lastHash,
+      self.hash,
+      self.data,
+      self.dataIndex,
+      self.filename,
+      self.validationHash,
+      self.validator,
+      self.signature
+    )
 
-  def genesis():
+  def genesis(self):
     return Block("genesis time", "----", "genesis-hash", "")
 
-  def hash(timestamp, lastHash, data):
+  def hash(
+      self,
+      timestamp,
+      lastHash,
+      data
+    ):
     return sha256(str(timestamp + lastHash + data).encode('utf-8')).hexdigest()
 
-  def createBlock(lastBlock, data, dataIndex, filename):
+  def createBlock(
+      self,
+      lastBlock,
+      data,
+      dataIndex,
+      filename
+    ):
     timestamp = str(datetime.now())
     lastHash = lastBlock.hash
     hash = Block.hash(timestamp, lastHash, data)
