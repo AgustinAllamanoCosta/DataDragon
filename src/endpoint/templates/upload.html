@@ -6,6 +6,7 @@
 <style type="text/css">
   body {
     margin: 0;
+    padding: 0;
   }
 
   #navbar {
@@ -36,7 +37,51 @@
   }
 
   #form-container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  input[type="submit"] {
+
+    width: 200px;
+
+    padding: 20px;
     margin: 20px;
+
+    border-width: 1px;
+    border-radius: 15px;
+
+    font-size: 20px;
+  }
+
+  #dropbox {
+    width: 1000px;
+    height: 200px;
+
+    border: 2px dotted grey;
+    border-radius: 30px;
+    background-color: #fefefe;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    padding: 6px 12px;
+    margin: 20px;
+
+    font-size: 35px;
+
+    cursor: pointer;
   }
 
 </style>
@@ -51,10 +96,23 @@
   <div id="form-container">
     <h1>Upload new File</h1>
     <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
+      <div id="form-container-inputs">
+        <label id="dropbox">
+          <input id="file-upload" type="file" name=file>
+          <div id="file-upload-text">Drop to upload file</div>
+        </label>
+        <input type=submit value=Upload>
+      </div>
     </form>
-  </div>
+
+    <script>
+      const div = document.getElementById("file-upload-text");
+      document.getElementById("file-upload").addEventListener("change", (event) => {
+        var input = event.srcElement;
+        var fileName = input.files[0].name;
+        div.innerHTML = fileName;
+      });
+    </script>
 </body>
 
 </html>
