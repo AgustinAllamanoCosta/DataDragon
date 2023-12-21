@@ -1,11 +1,11 @@
 import os
 
-from endpoint.main import start
 from asyncio import sleep
 from threading import Thread
 from src.blockchain.blockchain import Blockchain
 from flask import Flask, flash, request, redirect, url_for, send_from_directory, abort, send_file, render_template, jsonify
 from werkzeug.utils import secure_filename
+from socket_client
 
 UPLOAD_FOLDER = 'endpoint/data/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'csv'}
@@ -15,9 +15,6 @@ CHUNK = 4
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-thread = Thread(target=start)
-thread.start()
 
 blockchain = Blockchain()
 
@@ -41,6 +38,9 @@ def upload_file():
         return redirect(request.url)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
+
+        sio.emit("fileData", file)
+
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return redirect('/explore')
         # return redirect(url_for('download_file', name=filename))
