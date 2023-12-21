@@ -1,10 +1,20 @@
 import datetime
+import random
+import requests
+from typing import List
+from typing import Annotated
 from api.configuration import IP_ADDR, HOSTNAME, KNOW_NODES, NODE_ID, DEFAULT_CHAIN_LENGTH
 from zkp.api.zkp import random_private_input
 from subprocess import call
 
 
 class Service(object):
+
+    nodes_to_use: List[str] = []
+    node_response = {
+        "true": 0,
+        "false": 0,
+    }
 
     def run_rescue_prover(self):
 
@@ -60,25 +70,27 @@ class Service(object):
             "HostName": HOSTNAME
         }
 
-    def validate(self):
+    def validate(
+        self
+    ):
         executable = "/src/zkp/build/Release/src/starkware/main/ziggy/ziggy_verifier"
         cmd = [
             "--in_file",
             "/src/zkp/examples/ziggy/proof.json",
             "--logtostderr"
-        ]        
+        ]
         return call([executable] + cmd)
 
     def generate_prover(
-            self,
-            private_key:str,
-            message:str
-        ):
+        self,
+        private_key:str,
+        message:str
+    ):
         executable = "/src/zkp/examples/ziggy/generate_keys.py"
         cmd = [
             f"--private_key=[{0}]".format(private_key),
             f"--message=[{0}]".format(message)
-        ]        
+        ]
         call([executable] + cmd)
 
         executable = "/src/zkp/build/Release/src/starkware/main/ziggy/ziggy_prover"
@@ -96,4 +108,17 @@ class Service(object):
             "--logtostderr"
         ]
         proc = call([executable] + cmd)
-        return proc
+        self.nodes_to_use = KNOW_NODES
+        while not len(self.nodes_to_use) == 0:
+            index = random.randint(0,len(self.nodes_to_use)-1)
+            node_url = self.nodes_to_use.pop(index)
+            data = None #Needs to be a file :D 
+            node_response = requests.post(node_url,data)
+            if node_response["validation"] == True:
+                self.node_response["true"] += 1
+            else:
+                self.node_response["false"] += 1
+
+        if (self.node_response["true"] / len(KNOW_NODES)) * 100 > 50:
+            #Update blockchain
+            pass
