@@ -107,14 +107,6 @@
     </form>
 
     <script>
-      const fileInput = document.getElementById("file-upload");
-      const fileUploadTextDiv = document.getElementById("file-upload-text");
-
-      fileInput.addEventListener("change", (event) => {
-        const fileName = event.target.files[0].name;
-        fileUploadTextDiv.innerHTML = fileName;
-      });
-
       document.querySelector('form').addEventListener('submit', function (e) {
         e.preventDefault(); // Stop form from submitting normally
         // Here you would typically handle the file upload process.
@@ -123,9 +115,53 @@
         // Optionally, redirect to the explore page:
         // window.location.href = './explore';
       });
+
+      const div = document.getElementById("file-upload-text");
+      const fileInput = document.getElementById("file-upload");
+      fileInput.addEventListener("change", (event) => {
+        var input = event.srcElement;
+        var fileName = input.files[0].name;
+        div.innerHTML = fileName;
+      });
+
+      let dropArea = document.getElementById('dropbox')
+
+      ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false)
+      })
+
+      ;['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, highlight, false)
+      })
+
+      ;['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, unhighlight, false)
+      })
+
+      function highlight(e) {
+        dropArea.classList.add('highlight')
+      }
+
+      function unhighlight(e) {
+        dropArea.classList.remove('highlight')
+      }
+
+      dropArea.addEventListener('drop', handleDrop, false)
+
+      function handleDrop(e) {
+        let files = e.dataTransfer.files
+
+        fileInput.files = files;
+        div.innerHTML = files[0].name;
+
+      }
+
+      function preventDefaults (e) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
     </script>
 
   </div>
 </body>
-
 </html>
