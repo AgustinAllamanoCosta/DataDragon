@@ -107,15 +107,6 @@
     </form>
 
     <script>
-      document.querySelector('form').addEventListener('submit', function (e) {
-        e.preventDefault(); // Stop form from submitting normally
-        // Here you would typically handle the file upload process.
-        // After the upload is complete, show the alert.
-        alert('File has been uploaded. Please go to the Explore page to view.');
-        // Optionally, redirect to the explore page:
-        // window.location.href = './explore';
-      });
-
       const div = document.getElementById("file-upload-text");
       const fileInput = document.getElementById("file-upload");
       fileInput.addEventListener("change", (event) => {
@@ -153,7 +144,6 @@
 
         fileInput.files = files;
         div.innerHTML = files[0].name;
-
       }
 
       function preventDefaults (e) {
