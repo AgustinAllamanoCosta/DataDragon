@@ -48,7 +48,7 @@ class Block:
     )
 
   def genesis():
-    return Block("genesis time", "----", "genesis-hash", "")
+    return Block("genesis time", "----", "genesis-hash", '')
 
   def hash(
       timestamp,

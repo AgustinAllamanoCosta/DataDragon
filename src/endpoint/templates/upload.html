@@ -2,6 +2,7 @@
 
 <head>
   <title>Openmesh</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <style type="text/css">
@@ -12,32 +13,35 @@
   }
 
   #navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: black;
-    box-shadow: inset;
+    text-align: left;
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 
   #navbar button {
+    display: inline-block;
     justify-content: center;
     align-items: center;
+
     font-size: 40px;
     margin: 20px;
+
     background-color: rgb(0, 119, 216);
     border-radius: 4px;
   }
 
   #navbar h2 {
+    display: inline-block;
     justify-content: center;
     align-items: center;
+
     font-size: 40px;
-    margin-right: 20px;
+    margin: 20px;
   }
 
   #navbar a {
-    margin: 20px;
     text-decoration: none;
+
     color: rgb(255, 255, 255);
   }
 
@@ -91,6 +95,7 @@
 <body>
   <div id="navbar">
     <h2><a href="./">Openmesh</a></h2>
+    <button><a href="./upload">Upload</a></button>
     <button><a href="./explore">Explore</a></button>
   </div>
 
