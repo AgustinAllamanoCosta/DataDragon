@@ -47,11 +47,10 @@ class Block:
       self.signature
     )
 
-  def genesis(self):
+  def genesis():
     return Block("genesis time", "----", "genesis-hash", "")
 
   def hash(
-      self,
       timestamp,
       lastHash,
       data
@@ -59,7 +58,6 @@ class Block:
     return sha256(str(timestamp + lastHash + data).encode('utf-8')).hexdigest()
 
   def createBlock(
-      self,
       lastBlock,
       data,
       dataIndex,
