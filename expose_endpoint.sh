@@ -1,1 +1,1 @@
-python3 -m flask --app src/endpoint/endpoint.py run
+python3 -m flask --app endpoint/endpoint.py run

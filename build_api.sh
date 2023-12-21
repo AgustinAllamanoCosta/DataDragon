@@ -1,1 +1,1 @@
-docker build -f Dockerfile_api -t agustinallamano/data-dagron:latest .
+docker buildx build --platform linux/amd64 -f Dockerfile_api -t agustinallamano/data-dagron:latest .

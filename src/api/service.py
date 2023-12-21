@@ -1,20 +1,9 @@
-import datetime
-import random
-import requests
-from typing import List
-from typing import Annotated
 from api.configuration import IP_ADDR, HOSTNAME, KNOW_NODES, NODE_ID, DEFAULT_CHAIN_LENGTH
 from zkp.api.zkp import random_private_input
 from subprocess import call
 
 
 class Service(object):
-
-    nodes_to_use: List[str] = []
-    node_response = {
-        "true": 0,
-        "false": 0,
-    }
 
     def run_rescue_prover(self):
 
@@ -76,12 +65,12 @@ class Service(object):
         executable = "/src/zkp/build/Release/src/starkware/main/ziggy/ziggy_verifier"
         cmd = [
             "--in_file",
-            "/src/zkp/examples/ziggy/proof.json",
+            "/src/zkp/examples/ziggy/proof-receive.json",
             "--logtostderr"
         ]
         return call([executable] + cmd)
 
-    def generate_prover(
+    async def generate_prover(
         self,
         private_key:str,
         message:str
@@ -91,7 +80,7 @@ class Service(object):
             f"--private_key=[{0}]".format(private_key),
             f"--message=[{0}]".format(message)
         ]
-        call([executable] + cmd)
+        await call([executable] + cmd)
 
         executable = "/src/zkp/build/Release/src/starkware/main/ziggy/ziggy_prover"
         cmd = [
@@ -107,18 +96,4 @@ class Service(object):
             "/src/zkp/examples/ziggy/proof.json",
             "--logtostderr"
         ]
-        proc = call([executable] + cmd)
-        self.nodes_to_use = KNOW_NODES
-        while not len(self.nodes_to_use) == 0:
-            index = random.randint(0,len(self.nodes_to_use)-1)
-            node_url = self.nodes_to_use.pop(index)
-            data = None #Needs to be a file :D 
-            node_response = requests.post(node_url,data)
-            if node_response["validation"] == True:
-                self.node_response["true"] += 1
-            else:
-                self.node_response["false"] += 1
-
-        if (self.node_response["true"] / len(KNOW_NODES)) * 100 > 50:
-            #Update blockchain
-            pass
+        await call([executable] + cmd)

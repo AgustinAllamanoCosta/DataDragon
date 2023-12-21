@@ -1,12 +1,13 @@
-import aiofiles
+
 from fastapi import FastAPI, File, UploadFile
-from typing import Annotated
 from api.service import Service
 from api.scan_service import ScanNode
+from api.socket_client import SocketClient
 
 app = FastAPI()
 service = Service()
 scan_service = ScanNode()
+#socker_service = SocketClient(service)
 
 @app.get("/healthcheck/")
 def read_root():
@@ -16,9 +17,13 @@ def read_root():
 def node_data():
     return service.get_node_data()
 
-@app.post("/proove")
+@app.post("/prove")
 async def proove_data(in_file: UploadFile=File(...)):
-    async with aiofiles.open("/src/zkp/examples/ziggy/proof.json", 'wb') as out_file:
-        while content := await in_file.read(1024):
-            await out_file.write(content)
-        return service.validate()
+    print(in_file)
+    # proof_receive_path = "/src/zkp/examples/ziggy/proof-receive.json"
+    # async with aiofiles.open(proof_receive_path, 'wb') as out_file:
+    #     while content in await in_file.read(1024):
+    #         await out_file.write(content)
+    #     validation = service.validate()
+    #     os.remove(proof_receive_path) 
+    #     return validation
