@@ -4,9 +4,9 @@ import argparse
 import os
 import random
 import sys
-from zkp.src.starkware.air.rescue.rescue_constants import PRIME
-from zkp.src.starkware.main.rescue.rescue_end_to_end_test import generate_random_hex_witness_and_output
-from zkp.src.starkware.main.ziggy.ziggy_end_to_end_test import generate_key_pair
+from src.zkp.src.starkware.air.rescue.rescue_constants import PRIME
+from src.zkp.src.starkware.main.rescue.rescue_end_to_end_test import generate_random_hex_witness_and_output
+from src.zkp.src.starkware.main.ziggy.ziggy_end_to_end_test import generate_key_pair
 
 def random_private_input(chain_length:int):
     print('Generates random private and public inputs for the rescue prover.')

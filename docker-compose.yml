@@ -4,5 +4,9 @@ services:
     container_name: node-1
     ports:
         - '80:80'
-        - '8080:8080'
+    image: 'agustinallamano/data-dagron:latest'
+  node-2:
+    container_name: node-2
+    ports:
+        - '81:80'
     image: 'agustinallamano/data-dagron:latest'

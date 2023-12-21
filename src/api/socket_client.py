@@ -8,8 +8,8 @@ import datetime
 from hashlib import sha256
 import json
 import websockets
-from api.configuration import KNOW_NODES
-from api.service import Service
+from src.api.configuration import KNOW_NODES
+from src.api.service import Service
 
 class SocketClient(object):
     service: Service

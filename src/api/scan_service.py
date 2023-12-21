@@ -1,5 +1,5 @@
 import requests
-from api.configuration import IP_ADDR, KNOW_NODES
+from src.api.configuration import IP_ADDR, KNOW_NODES
 from time import sleep
 from threading import Thread
 

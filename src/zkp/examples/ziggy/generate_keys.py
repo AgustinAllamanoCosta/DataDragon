@@ -6,8 +6,8 @@ import os
 import random
 import sys
 
-from zkp.src.starkware.air.rescue.rescue_constants import PRIME
-from starkware.main.ziggy.ziggy_end_to_end_test import generate_key_pair
+from src.zkp.src.starkware.air.rescue.rescue_constants import PRIME
+from src.zkp.src.starkware.main.ziggy.ziggy_end_to_end_test import generate_key_pair
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(

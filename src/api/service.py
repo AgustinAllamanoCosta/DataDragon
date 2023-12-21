@@ -1,5 +1,5 @@
-from api.configuration import IP_ADDR, HOSTNAME, KNOW_NODES, NODE_ID, DEFAULT_CHAIN_LENGTH
-from zkp.api.zkp import random_private_input
+from src.api.configuration import IP_ADDR, HOSTNAME, KNOW_NODES, NODE_ID, DEFAULT_CHAIN_LENGTH
+from src.zkp.api.zkp import random_private_input
 from subprocess import call
 
 
