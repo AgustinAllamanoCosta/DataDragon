@@ -21,4 +21,27 @@ services:
     image: 'agustinallamano/data-dagron:latest'
     depends_on:
       - endpoint
-
+  
+#  node-3:
+#    container_name: node-3
+#    ports:
+#        - '82:80'
+#    image: 'agustinallamano/data-dagron:latest'
+#    depends_on:
+#      - endpoint
+#
+#  node-4:
+#    container_name: node-4
+#    ports:
+#        - '83:80'
+#    image: 'agustinallamano/data-dagron:latest'
+#    depends_on:
+#      - endpoint
+#
+#  node-5:
+#    container_name: node-5
+#    ports:
+#        - '84:80'
+#    image: 'agustinallamano/data-dagron:latest'
+#    depends_on:
+#      - endpoint

@@ -74,7 +74,6 @@ class Service(object):
             "--logtostderr"
         ]
         call([executable] + cmd)
-        sleep(5)
 
     def generate_prover(
         self,

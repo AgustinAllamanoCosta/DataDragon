@@ -1,6 +1,8 @@
 
 import json
 import os
+from src.blockchain.blockchain import Blockchain
+from src.api.socket_client import blockchain
 from src.api.service import Service
 from fastapi import FastAPI, File, UploadFile
 import uvicorn
@@ -15,6 +17,10 @@ def read_root():
 @api.get("/")
 def node_data():
     return service.get_node_data()
+
+@api.get("/blockchain")
+def blockchain_data():
+    return Blockchain.toDictionary(blockchain.chain)
 
 @api.post("/prover")
 async def proove_data(file: UploadFile = File(...)):

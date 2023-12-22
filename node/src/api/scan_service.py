@@ -14,7 +14,7 @@ class ScanNode(object):
     def do_ping(self) -> None:
         try:
             while True:
-                sleep(1)
+                sleep(5)
                 for new_block in range(1,254):
 
                     ip_to_ping: str = '{0}.{1}.{2}.{3}'.format(

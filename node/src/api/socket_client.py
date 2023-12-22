@@ -39,7 +39,7 @@ def update_blockchain_or_not(node_responses,data):
     if ( node_responses["true"] != 0 and node_responses["true"] / len(KNOW_NODES)) * 100 > 50:
       blockchain.addBlock(data["chunk"], data["index"], data["filename"])
       jsonBlockchain = json.dumps(Blockchain.toDictionary(blockchain.chain))
-      print('blockchain_data', json.dumps(Blockchain.toDictionary(blockchain.chain)))
+      sio.emit('blockchain_data', json.dumps(Blockchain.toDictionary(blockchain.chain)))
     else:
       print("False 51%")
 

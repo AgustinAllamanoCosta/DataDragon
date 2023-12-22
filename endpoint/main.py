@@ -1,4 +1,5 @@
 import base64
+from time import sleep
 import eventlet
 import socketio
 from typing import List
@@ -44,8 +45,7 @@ def send_periodic_message():
                     "index":chunk_index,
                     "filename":"hello.txt"
                 }                
-                sio.sleep(2)
-                print("Emiiting")
+                sio.sleep(15)
                 sio.emit('message', data_to_stream)
                 chunk_index += 1
         except Exception as e:
