@@ -19,6 +19,11 @@ def connect(sid, environ):
 def disconnect(sid):
     print('disconnect ', sid)
 
+@sio.on("blockchain_data")
+def updateBlockchain(sid, blockchain):
+    BLOCKCHAIN = blockchain
+    print('blockchain_data ', BLOCKCHAIN)
+
 def send_periodic_message():
     while True:
         try:
@@ -48,4 +53,4 @@ def send_periodic_message():
 
 if __name__ == '__main__':
     eventlet.spawn(send_periodic_message)
-    eventlet.wsgi.server(eventlet.listen(('', 5001)), app)
+    eventlet.wsgi.server(eventlet.listen(('', 5002)), app)

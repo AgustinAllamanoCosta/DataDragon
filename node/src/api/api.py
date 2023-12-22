@@ -18,6 +18,7 @@ def node_data():
 @api.post("/prover")
 async def proove_data(request: UploadFile = File(...)):
     file_content = await request.read()
+    print("waka ", file_content)
     with open('/src/zkp/examples/ziggy/proof-receive.json', "wb")  as new_file:
         new_file.write(file_content)
     service.validate()

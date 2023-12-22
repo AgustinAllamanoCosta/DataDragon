@@ -15,7 +15,7 @@ class Blockchain:
     chain_to_dictionary = []
     for block in chain:
       if block.data:
-        chain_to_dictionary.append({ "timestamp": block.timestamp, "lastHash": block.lastHash, "hash": block.hash, "data": base64.b64decode(block.data[1:]),  "dataIndex": block.dataIndex,  "filename": block.filename,  "validationHash": block.validationHash, "validator": block.validator, "signature": block.signature })
+        chain_to_dictionary.append({ "timestamp": block.timestamp, "lastHash": block.lastHash, "hash": block.hash, "data": base64.b64decode(block.data[1:]).decode("utf-8"),  "dataIndex": block.dataIndex,  "filename": block.filename,  "validationHash": block.validationHash, "validator": block.validator, "signature": block.signature })
       else:
         chain_to_dictionary.append({ "timestamp": block.timestamp, "lastHash": block.lastHash, "hash": block.hash, "data": block.data,  "dataIndex": block.dataIndex,  "filename": block.filename,  "validationHash": block.validationHash, "validator": block.validator, "signature": block.signature })
     return chain_to_dictionary
