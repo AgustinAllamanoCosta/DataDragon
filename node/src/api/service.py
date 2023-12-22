@@ -8,7 +8,7 @@ class Service(object):
 
     def run_rescue_prover(self):
 
-        executable = "/src/node/src/zkp/build/Release/src/starkware/main/rescue/rescue_prover"
+        executable = "/src/zkp/build/Release/src/starkware/main/rescue/rescue_prover"
         cmd = [
             "--parameter_file",
             "/src/zkp/examples/rescue/rescue_params.json",
@@ -27,7 +27,7 @@ class Service(object):
 
     def run_rescue_validation(self):
 
-        executable = "/src/node/src/zkp/build/Release/src/starkware/main/rescue/rescue_verifier"
+        executable = "/src/zkp/build/Release/src/starkware/main/rescue/rescue_verifier"
         cmd = [
             "--in_file",
             "/src/zkp/examples/rescue/proof.json",
@@ -63,7 +63,8 @@ class Service(object):
     def validate(
         self
     ):
-        executable = "/src/node/src/zkp/build/Release/src/starkware/main/ziggy/ziggy_verifier"
+        print("validate file")
+        executable = "/src/zkp/build/Release/src/starkware/main/ziggy/ziggy_verifier"
         cmd = [
             "--in_file",
             "/src/zkp/examples/ziggy/proof-receive.json",
@@ -80,7 +81,7 @@ class Service(object):
         generate_ziggy_keys(private_key,message)
 
         print("generating prover file")
-        executable = "/src/node/src/zkp/build/Release/src/starkware/main/ziggy/ziggy_prover"
+        executable = "/src/zkp/build/Release/src/starkware/main/ziggy/ziggy_prover"
         cmd = [
             "--parameter_file",
             "/src/zkp/examples/ziggy/ziggy_params.json",

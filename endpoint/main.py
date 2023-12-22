@@ -33,7 +33,7 @@ def send_periodic_message():
                     file_data_chunk = file_data[i:]
                 else:
                     file_data_chunk = file_data[i: i + CHUNK]
-                encoded_file_data_chunk = base64.b64encode(file_data_chunk.encode())
+                encoded_file_data_chunk = base64.b64encode(file_data_chunk.encode('UTF-8'))
                 data_to_stream = {
                     "chunk":str(encoded_file_data_chunk),
                     "index":chunk_index,

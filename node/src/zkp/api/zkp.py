@@ -29,8 +29,8 @@ def generate_ziggy_keys(private_key:str,message:str):
     keys = generate_key_pair(PRIME, private_key)
     private_key, public_key = keys['private_key'], keys['public_key']
     json.dump({'private_key': private_key}, open(
-        os.path.join('/src/zkp/examples/', 'ziggy_private_input.json'), 'w'), indent=4)
+        os.path.join('/src/zkp/examples/ziggy/', 'ziggy_private_input.json'), 'w'), indent=4)
     json.dump(
         {'message': message, 'public_key': public_key},
-        open(os.path.join('/src/zkp/examples/', 'ziggy_public_input.json'), 'w'),
+        open(os.path.join('/src/zkp/examples/ziggy/', 'ziggy_public_input.json'), 'w'),
         indent=4)

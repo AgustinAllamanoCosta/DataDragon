@@ -1,10 +1,15 @@
 FROM agustinallamano/zkp:latest
-WORKDIR node/
 COPY ./node/requirements.txt .
 
 RUN pip3 install -r ./requirements.txt
 
 COPY ./node .
+#COPY ./node/src/api ./src/api
+#COPY ./node/src/blockchain ./src/blockchain
+#COPY ./node/src/zkp/api ./src/zkp/api
+#COPY ./node/src/zkp/examples ./src/zkp/examples
+#COPY ./node/src/zkp/src ./src/zkp/src
+
 ENV LC_ALL=C.UTF-8 
 ENV LANG=C.UTF-8
 
@@ -12,4 +17,5 @@ EXPOSE 80
 EXPOSE 8080
 
 RUN export FLASK_PORT=80
+
 CMD ["python3","-u","app.py"]
