@@ -1,4 +1,5 @@
 import base64
+from copy import *
 import datetime
 import json
 import traceback
@@ -13,38 +14,34 @@ from src.api.service import Service
 
 sio = socketio.Client()
 service = Service()
-node_responses = {
-   "true": 0,
-   "false": 0
-}
 
 blockchain = Blockchain()
 
 def validate_proof_file(node_responses):
-  print("waka validate proof")
   file = open("/src/zkp/examples/ziggy/proof.json", "rb")  
-  nodes_to_use = KNOW_NODES
-  print("node to use", nodes_to_use)
+  nodes_to_use = copy(KNOW_NODES)
   while not len(nodes_to_use) == 0:
     index = random.randint(0,len(nodes_to_use)-1)
     node_url = nodes_to_use.pop(index)
-    print("waka ", node_url)
-    print("Sending proof to",node_url+"prover")
-    node_response = requests.post(node_url+"prover",file)
-    #if node_response["validation"] == True:
-    #    node_responses["true"] += 1
-    #else:
-    #    node_responses["false"] += 1
+    files = {"file": file}
+    node_response = requests.post(node_url+"prover", files=files)
+    print("proveer response", node_response.json())
+    if node_response.json()["validation"] == True:
+        print("valid plus one")
+        node_responses["true"] += 1
+    else:
+        print("invalid plus one")
+        node_responses["false"] += 1
   file.close()
 
-def update_blockchain_or_not(node_responses, data):
-    # if (node_responses["true"] / len(KNOW_NODES)) * 100 > 50:
-    blockchain.addBlock(data["chunk"], data["index"], data["filename"])
-    jsonBlockchain = json.dumps(Blockchain.toDictionary(blockchain.chain))
-    print("wakawaka created a new block", jsonBlockchain)
-    sio.emit('blockchain_data', json.dumps(Blockchain.toDictionary(blockchain.chain)))
-    node_responses["true"]  = 0
-    node_responses["false"] = 0
+def update_blockchain_or_not(node_responses,data):
+    
+    if ( node_responses["true"] != 0 and node_responses["true"] / len(KNOW_NODES)) * 100 > 50:
+      blockchain.addBlock(data["chunk"], data["index"], data["filename"])
+      jsonBlockchain = json.dumps(Blockchain.toDictionary(blockchain.chain))
+      print('blockchain_data', json.dumps(Blockchain.toDictionary(blockchain.chain)))
+    else:
+      print("False 51%")
 
 def start_back_task(task):
   sio.start_background_task(task)
@@ -73,14 +70,18 @@ def disconnect():
 def message(data):
     try:
       chunk:bytes = base64.b64decode(data['chunk'])
-      # if len(KNOW_NODES) != 0:
-      timestamp = str(datetime.datetime.now())
-      private_key = bytearray(random.getrandbits(8) for i in range(32 - len(chunk)))
-      print("hash64 ", len(chunk + private_key))
-      print("timestamp ", timestamp)
-      service.generate_prover(chunk + private_key, timestamp)
-      validate_proof_file(node_responses)
-      update_blockchain_or_not(node_responses, data)
+      node_responses = {
+        "true": 0,
+        "false": 0
+      }
+      if len(KNOW_NODES) != 0:
+        timestamp = str(datetime.datetime.now())
+        private_key = bytearray(random.getrandbits(8) for i in range(32 - len(chunk)))
+        service.generate_prover(chunk + private_key, timestamp)
+        validate_proof_file(node_responses)
+        update_blockchain_or_not(node_responses,data)
+      else:
+         print("Not enough nodes")
     except Exception as e:
       print("Error in chunk", e)
       print(traceback.format_exc())

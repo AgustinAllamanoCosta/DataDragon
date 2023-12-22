@@ -1,4 +1,6 @@
+import os
 import datetime
+from time import sleep
 from src.api.configuration import IP_ADDR, HOSTNAME, KNOW_NODES, NODE_ID, DEFAULT_CHAIN_LENGTH
 from src.zkp.api.zkp import generate_ziggy_keys, random_private_input
 from subprocess import call
@@ -34,6 +36,7 @@ class Service(object):
             "--logtostderr"
         ]
         proc = call([executable] + cmd)
+        os.remove('/src/zkp/examples/rescue/proof.json')
         return proc
 
     def run_helath_check_test(self):
@@ -70,7 +73,8 @@ class Service(object):
             "/src/zkp/examples/ziggy/proof-receive.json",
             "--logtostderr"
         ]
-        return call([executable] + cmd)
+        call([executable] + cmd)
+        sleep(5)
 
     def generate_prover(
         self,
