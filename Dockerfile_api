@@ -1,17 +1,15 @@
 FROM agustinallamano/zkp:latest
-WORKDIR /src
-COPY ./src/api ./api
-COPY ./src/__init__.py .
-COPY ./src/app.py .
-COPY ./src/requirements.txt .
-COPY ./src/zkp/ ./zkp/
+WORKDIR node/
+COPY ./node/requirements.txt .
 
 RUN pip3 install -r ./requirements.txt
 
+COPY ./node .
 ENV LC_ALL=C.UTF-8 
 ENV LANG=C.UTF-8
 
 EXPOSE 80
 EXPOSE 8080
-RUN export FLASK_APP=src/main.py
-CMD ["flask","run","--port","80"]
+
+RUN export FLASK_PORT=80
+CMD ["python3","-u","app.py"]

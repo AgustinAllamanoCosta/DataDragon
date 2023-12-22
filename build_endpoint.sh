@@ -1,0 +1,1 @@
+docker build -f Dockerfile_endpoint -t agustinallamano/endpoint:latest .

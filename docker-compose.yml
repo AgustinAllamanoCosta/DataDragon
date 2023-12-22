@@ -1,12 +1,24 @@
 version: '2.1'
 services:
+  endpoint:
+    container_name: dataSource
+    ports:
+        - '5001:5001'
+    image: 'agustinallamano/endpoint:latest'
+
   node-1:
     container_name: node-1
     ports:
         - '80:80'
     image: 'agustinallamano/data-dagron:latest'
+    depends_on:
+      - endpoint
+  
   node-2:
     container_name: node-2
     ports:
         - '81:80'
     image: 'agustinallamano/data-dagron:latest'
+    depends_on:
+      - endpoint
+
