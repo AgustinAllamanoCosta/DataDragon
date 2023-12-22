@@ -1,0 +1,162 @@
+<!doctype html>
+
+<head>
+  <title>Openmesh</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<style type="text/css">
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  #navbar {
+    text-align: left;
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  #navbar button {
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 40px;
+    margin: 20px;
+
+    background-color: rgb(0, 119, 216);
+    border-radius: 4px;
+  }
+
+  #navbar h2 {
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 40px;
+    margin: 20px;
+  }
+
+  #navbar a {
+    text-decoration: none;
+
+    color: rgb(255, 255, 255);
+  }
+
+  #form-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  input[type="submit"] {
+
+    width: 200px;
+    color: white;
+    padding: 20px;
+    margin: 20px;
+    background-color: rgb(0, 124, 226);
+    border-width: 1px;
+    border-radius: 15px;
+    font-size: 20px;
+  }
+
+  #dropbox {
+    width: 1000px;
+    height: 200px;
+
+    border: 2px dotted grey;
+    border-radius: 30px;
+    background-color: #fefefe;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    padding: 6px 12px;
+    margin: 20px;
+
+    font-size: 35px;
+
+    cursor: pointer;
+  }
+</style>
+
+<body>
+  <div id="navbar">
+    <h2><a href="./">Openmesh</a></h2>
+    <button><a href="./upload">Upload</a></button>
+    <button><a href="./explore">Explore</a></button>
+  </div>
+
+  <div id="form-container">
+    <h1>Upload new File</h1>
+    <form method=post enctype=multipart/form-data>
+      <div id="form-container-inputs">
+        <label id="dropbox">
+          <input id="file-upload" type="file" name=file>
+          <div id="file-upload-text">Drop to upload file</div>
+        </label>
+        <input type=submit value=Upload>
+      </div>
+    </form>
+
+    <script>
+      const div = document.getElementById("file-upload-text");
+      const fileInput = document.getElementById("file-upload");
+      fileInput.addEventListener("change", (event) => {
+        var input = event.srcElement;
+        var fileName = input.files[0].name;
+        div.innerHTML = fileName;
+      });
+
+      let dropArea = document.getElementById('dropbox')
+
+      ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false)
+      })
+
+      ;['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, highlight, false)
+      })
+
+      ;['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, unhighlight, false)
+      })
+
+      function highlight(e) {
+        dropArea.classList.add('highlight')
+      }
+
+      function unhighlight(e) {
+        dropArea.classList.remove('highlight')
+      }
+
+      dropArea.addEventListener('drop', handleDrop, false)
+
+      function handleDrop(e) {
+        let files = e.dataTransfer.files
+
+        fileInput.files = files;
+        div.innerHTML = files[0].name;
+      }
+
+      function preventDefaults (e) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+    </script>
+
+  </div>
+</body>
+</html>
